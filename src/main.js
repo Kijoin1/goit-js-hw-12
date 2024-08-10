@@ -54,7 +54,6 @@ const params = {
     safesearch: true,
     page: currentPage,
     per_page: 15,
-    maxPage: 0
     }
 }
 
