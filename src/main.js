@@ -8,7 +8,7 @@ const form = document.querySelector('.result-receiver')
 const input = document.querySelector('#search')
 const button = document.querySelector('[data-start]')
 const buttonLoad = document.querySelector('.load-button')
-const elementImg = document.querySelector('.gallery-div a')
+// const elementImg = document.querySelector('.gallery-div a')
 
 let value = '';
 let totalHits = 0;
