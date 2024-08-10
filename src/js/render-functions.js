@@ -40,3 +40,29 @@ export function removeLoading() {
 const loading = document.querySelector('.loading-div');
 loading.innerHTML = '';
 }
+
+// button Load more
+
+export class ButtonMethods {
+constructor(button, hiddenClass) {
+    this.button = button;
+    this.hiddenClass = hiddenClass;
+}
+
+hide() {
+    this.button.classList.add(this.hiddenClass);
+    }
+
+show() {
+    this.button.classList.remove(this.hiddenClass);
+    }
+
+disable() {
+    this.button.disabled = true;
+}
+
+enable() {
+    this.button.disabled = false;
+}
+}
+
