@@ -106,8 +106,7 @@ const params = {
 
 createHTTPRequest(params)
 .then((data)=>{
-    console.log(data)
-    totalHits = data.totalHits
+totalHits = data.totalHits
 removeLoading()
 
 try {
