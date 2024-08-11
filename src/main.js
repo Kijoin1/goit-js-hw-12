@@ -8,7 +8,7 @@ const form = document.querySelector('.result-receiver')
 const input = document.querySelector('#search')
 const button = document.querySelector('[data-start]')
 const buttonLoad = document.querySelector('.load-button')
-// const elementImg = document.querySelector('.gallery-div a')
+// const elementImg = document.querySelector('.gallery-div')
 
 let value = '';
 let totalHits = 0;
@@ -54,11 +54,15 @@ const params = {
     safesearch: true,
     page: currentPage,
     per_page: 15,
+    maxPage: 0,
     }
 }
 
+
+
 createHTTPRequest(params)
 .then((data)=> {
+    totalHits = data.totalHits
     if (data.hits.length === 0) {
         loadMoreButton.hide()
         loadMoreButton.disable()
@@ -79,14 +83,18 @@ createHTTPRequest(params)
 })
 })
 .finally(() => {
+if (currentPage * 15 >= totalHits) {
+    loadMoreButton.disable()
+    loadMoreButton.hide()
+}
 removeLoading()
 form.reset()
 })
+currentPage = 1
 }
 
-// функція по кліку на прогрузку картинок
 function loadMore(){
-currentPage += 1
+
 loading()
 
 const params = {
@@ -105,8 +113,6 @@ createHTTPRequest(params)
 .then((data)=>{
     console.log(data)
     totalHits = data.totalHits
-    // totalHitsToLoad = totalHits - 15
-
 removeLoading()
 
 try {
@@ -116,6 +122,7 @@ if (currentPage * 15 >= totalHits) {
 }
     loadMoreButton.show()
     loadMoreButton.enable()
+    currentPage += 1
 }catch (error) {
     loadMoreButton.disable()
     loadMoreButton.hide()
@@ -124,22 +131,3 @@ if (currentPage * 15 >= totalHits) {
 })}
 })
 }
-
-//     if (currentPage * 15 >= totalHits) {
-//         throw new Error('No images found');
-//     } else {
-//     // let rect = elem.getBoundingClientRect();
-//     window.scrollBy({
-//         top: 100,
-//         left: 100,
-//         behavior: "smooth",
-// });
-
-//         createListImg(data)
-//         loadMoreButton.show()
-//         loadMoreButton.enable()
-//     }})
-// .catch(()=>{
-
-//     })})
-// }
