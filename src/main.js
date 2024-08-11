@@ -73,7 +73,7 @@ createHTTPRequest(params)
     message: 'Sorry, there are no images matching your search query. Please try again!',
     color: 'red',
     image: './img/cat_error.jpg',
-    imageWidth: 60,
+    imageWidth: 55,
     position: 'topRight'
 })
 })
@@ -117,7 +117,7 @@ if (galleryItems.length > 0) {
     const lastElement = galleryItems[galleryItems.length - 1];
     const cardHeight = lastElement.getBoundingClientRect().height;
     window.scrollBy({
-        top: cardHeight * 2,
+        top: cardHeight * 4,
         behavior: 'smooth'
     });
 }
