@@ -61,9 +61,11 @@ createHTTPRequest(params)
 .then((data)=> {
     if (data.hits.length === 0) {
         loadMoreButton.hide()
+        loadMoreButton.disable()
         throw new Error('No images found');
     }else{
         loadMoreButton.show()
+        loadMoreButton.enable()
         createListImg(data)
     }
 })
@@ -102,21 +104,42 @@ const params = {
 createHTTPRequest(params)
 .then((data)=>{
     console.log(data)
-    totalHits = data.totalHits.length
-    totalHitsToLoad = totalHits - 15
+    totalHits = data.totalHits
+    // totalHitsToLoad = totalHits - 15
 
 removeLoading()
-    if (totalHitsToLoad < 15) {
-        throw new Error('No images found');
-    } else {
-        createListImg(data)
-        loadMoreButton.show()
-        loadMoreButton.enable()
-    }})
-.catch(()=>{
-        loadMoreButton.disable()
-        loadMoreButton.hide()
-    iziToast.error({
-        message: "We're sorry, but you've reached the end of search results.",
-    })})
+
+try {
+    createListImg(data)
+if (currentPage * 15 >= totalHits) {
+    throw new Error('No images found');
 }
+    loadMoreButton.show()
+    loadMoreButton.enable()
+}catch (error) {
+    loadMoreButton.disable()
+    loadMoreButton.hide()
+    iziToast.error({
+    message: "We're sorry, but you've reached the end of search results.",
+})}
+})
+}
+
+//     if (currentPage * 15 >= totalHits) {
+//         throw new Error('No images found');
+//     } else {
+//     // let rect = elem.getBoundingClientRect();
+//     window.scrollBy({
+//         top: 100,
+//         left: 100,
+//         behavior: "smooth",
+// });
+
+//         createListImg(data)
+//         loadMoreButton.show()
+//         loadMoreButton.enable()
+//     }})
+// .catch(()=>{
+
+//     })})
+// }
