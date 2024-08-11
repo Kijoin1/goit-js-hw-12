@@ -8,7 +8,7 @@ const form = document.querySelector('.result-receiver')
 const input = document.querySelector('#search')
 const button = document.querySelector('[data-start]')
 const buttonLoad = document.querySelector('.load-button')
-// const elementImg = document.querySelector('.gallery-div')
+
 
 let value = '';
 let totalHits = 0;
@@ -77,7 +77,7 @@ createHTTPRequest(params)
  iziToast.show({
     message: 'Sorry, there are no images matching your search query. Please try again!',
     color: 'red',
-    image: '/src/img/cat_error.jpg',
+    image: './img/cat_error.jpg',
     imageWidth: 60,
     position: 'topRight'
 })
@@ -89,12 +89,12 @@ if (currentPage * 15 >= totalHits) {
 }
 removeLoading()
 form.reset()
+checkButton()
 })
 currentPage = 1
 }
 
 function loadMore(){
-
 loading()
 
 const params = {
@@ -116,18 +116,34 @@ createHTTPRequest(params)
 removeLoading()
 
 try {
-    createListImg(data)
+createListImg(data)
+
+const galleryItems = document.querySelectorAll('.gallery-div a');
+if (galleryItems.length > 0) {
+    const lastElement = galleryItems[galleryItems.length - 1];
+    const cardHeight = lastElement.getBoundingClientRect().height;
+    window.scrollBy({
+        top: cardHeight * 2,
+        behavior: 'smooth'
+    });
+}
+    
 if (currentPage * 15 >= totalHits) {
     throw new Error('No images found');
 }
+    currentPage += 1
     loadMoreButton.show()
     loadMoreButton.enable()
-    currentPage += 1
 }catch (error) {
     loadMoreButton.disable()
     loadMoreButton.hide()
     iziToast.error({
     message: "We're sorry, but you've reached the end of search results.",
+    color: 'blue',
+    position: 'topRight',
+    image: './img/cat_error2.jpg',
+    imageWidth: 55,
+    icon: '',
 })}
 })
 }
