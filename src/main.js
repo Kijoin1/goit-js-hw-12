@@ -90,6 +90,7 @@ checkButton()
 
 function loadMore(){
 loading()
+currentPage += 1
 
 const params = {
     params: {
@@ -125,7 +126,6 @@ if (galleryItems.length > 0) {
 if (currentPage * 15 >= totalHits) {
     throw new Error('No images found');
 }
-    currentPage += 1
     loadMoreButton.show()
     loadMoreButton.enable()
 }catch (error) {
