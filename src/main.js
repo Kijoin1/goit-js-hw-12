@@ -9,11 +9,9 @@ const input = document.querySelector('#search')
 const button = document.querySelector('[data-start]')
 const buttonLoad = document.querySelector('.load-button')
 
-
 let value = '';
 let totalHits = 0;
 let currentPage = 1;
-let totalHitsToLoad = 0;
 
 const loadMoreButton = new ButtonMethods(buttonLoad, 'is-hidden');
 loadMoreButton.hide();
@@ -23,8 +21,6 @@ checkButton()
 document.addEventListener('input', checkButton)
 document.addEventListener('submit', searchImg)
 buttonLoad.addEventListener('click', loadMore)
-
-
 
 // function
 
@@ -43,6 +39,7 @@ removeListImg();
 
 loading()
 
+currentPage = 1
 value = input.value
 
 const params = {
@@ -57,8 +54,6 @@ const params = {
     maxPage: 0,
     }
 }
-
-
 
 createHTTPRequest(params)
 .then((data)=> {
@@ -91,7 +86,6 @@ removeLoading()
 form.reset()
 checkButton()
 })
-currentPage = 1
 }
 
 function loadMore(){
